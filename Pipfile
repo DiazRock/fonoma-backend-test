@@ -9,6 +9,11 @@ uvicorn = "*"
 debugpy = "*"
 pydantic = "*"
 pytest = "*"
+aioredis = "*"
+dependency-injector = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+httpx = "*"
 
 [dev-packages]
 
