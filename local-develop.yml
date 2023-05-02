@@ -1,0 +1,28 @@
+version: "3.7"
+
+services:
+
+  fastapi-vscode-debug-setup:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - "./:/code"
+    depends_on:
+      - "redis"
+    entrypoint: ["sh", "-c", "cd /code && pipenv install debugpy && pipenv requirements > requirements.txt && pip install -r requirements.txt && pip install dependency-injector pytest fastapi redis aioredis pytest pytest-asyncio pytest-cov httpx && python /root/.local/share/virtualenvs/code-_Py8Si6I/lib/python3.10/site-packages/debugpy --wait-for-client --listen 0.0.0.0:5678 -m uvicorn server.fastapi_server:app --host 0.0.0.0 --port 8000 --reload"]
+    ports:
+      - 8000:8000
+      - 5678:5678
+    environment:
+      REDIS_HOST: "redis"
+      REDIS_PASSWORD: "password"
+
+  redis:
+    image: sewenew/redis-protobuf:latest
+    command: ["redis-server", "/usr/lib/redis/conf/redis.conf", "--requirepass", "password", ]
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./orders.proto:/usr/lib/redis/proto/orders.proto"
+      - "./redis.conf:/usr/lib/redis/conf/redis.conf"
