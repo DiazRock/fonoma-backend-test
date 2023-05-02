@@ -17,9 +17,9 @@ services:
 
   redis:
     image: sewenew/redis-protobuf:latest
-    command: ["redis-server",  "--requirepass", "password"]
+    command: ["redis-server", "/usr/lib/redis/conf/redis.conf", "--requirepass", "password" ]
     ports:
       - "6379:6379"
     volumes:
       - "./orders.proto:/usr/lib/redis/proto/"
-      #- "./redis.conf:/usr/lib/redis/conf/redis.conf"
+      - "./redis.conf:/usr/lib/redis/conf/redis.conf"
