@@ -37,5 +37,4 @@ async def process_orders(orders_and_criterion: OrderRequest, service: OrderProce
 
 container = Container()
 container.config.redis_host.from_env("REDIS_HOST", "localhost")
-container.config.redis_password.from_env("REDIS_PASSWORD", "password")
 container.wire(modules=[__name__])

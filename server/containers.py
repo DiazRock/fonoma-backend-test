@@ -9,8 +9,7 @@ class Container(containers.DeclarativeContainer):
 
     redis_pool = providers.Resource(
         redis.init_redis_pool,
-        host=config.redis_host,
-        password=config.redis_password,
+        host=config.redis_host
     )
 
     service = providers.Factory(
